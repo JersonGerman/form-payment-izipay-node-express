@@ -31,3 +31,5 @@ Abrir en su navegador la siguiente URL
 ```sh
 http://localhost:4000
 ```
+
+Para más información acerca del formulario de Izipay consulte su documentación [Aquí](https://secure.micuentaweb.pe/doc/es-PE/rest/V4.0/javascript/)
