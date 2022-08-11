@@ -11,7 +11,7 @@ Instalar la version LTS de [Node.js](https://nodejs.org) v16+
 clonar el repositorio.
 
 ```sh
-git clone https://github.com/JersonGerman/ionic-app-react-typescript-places.git
+git clone https://github.com/JersonGerman/form-payment-izipay-node-express.git
 ```
 
 Instalar las dependecias del proyecto.
@@ -26,7 +26,7 @@ Iniciar  el servidor de desarrollo.
 npm start
 ```
 
-Abrir su navegador la siguiente URL
+Abrir en su navegador la siguiente URL
 
 ```sh
 http://localhost:4000
