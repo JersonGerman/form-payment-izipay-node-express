@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- CHANGE your public key -->
+    <script
+      src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js"
+      kr-public-key="44842422:testpublickey_Az8ibtrm5cAhb3aOt1g20oQtgpR14c9TSdPYSVhqFlj2P"
+    ></script>
+
+    <!-- theme and plugins. should be loaded after the javascript library -->
+    <!-- not mandatory but helps to have a nice payment form out of the box -->
+    <link
+      rel="stylesheet"
+      href="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic-reset.css"
+    />
+    <script src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js"></script>
+  </head>
+  <body>
+    <div id="paymentForm" style="width: 400px; margin: auto"></div>
+    <script>
+      const header = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: 90,
+          currency: "USD",
+          customer: {
+            email: "example9@gmail.com",
+          },
+          orderId: "pedido-9",
+        }),
+      };
+      const startForm = () => {
+        fetch("http://localhost:4000/api/createPayment", header)
+          .then((res) => res.json())
+          .then((res) => {
+            KR.setFormConfig({
+              formToken: res.formToken,
+            })
+              .then(({ KR }) => KR.onSubmit(validatePayment))
+              .then(({ KR }) => KR.addForm("#paymentForm"))
+              .then(({ KR, result }) => KR.showForm(result.formId));
+          });
+      };
+
+      const validatePayment = (event) => {
+        fetch("http://localhost:4000/api/validatePayment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(event),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res == "Valid Payment") {
+              document.getElementById("paymentForm").innerHTML =
+                "<h1>Successful Payment</h2>";
+            }
+          });
+      };
+
+      KR.onFormValid(({ KR, cardInfo }) => {
+        console.log(
+          "Selected brand: " + cardInfo.brand + ", and bin: " + cardInfo.bin
+        );
+      });
+      KR.onError((event) => {
+        let code = event.errorCode;
+        let message = event.errorMessage;
+        console.log(code + ": " + message);
+      });
+      
+      document.addEventListener("DOMContentLoaded", startForm);
+    </script>
+  </body>
+</html>
