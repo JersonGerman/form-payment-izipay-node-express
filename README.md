@@ -1,8 +1,6 @@
 # form-payment-izipay-node-express
 Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis para crear un pago en los formularios de Izipay.
 
-
-
 ### CreatePayment
 **POST** Crear FormToken  
 `http://localhost:4000/api/createPayment`
@@ -21,7 +19,7 @@ Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis par
 ### ValidatePayment
 **POST** Verificar pago realizado
 `http://localhost:4000/api/validatePayment`
-**BODY** json
+**BODY** json  
 ```sh
 {
     clientAnswer:{SHOPID:12345678,ORDERSTATUS:PAID,...}
@@ -32,22 +30,35 @@ Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis par
 }
 ```
 
-## Instalación
+## Requisitos previos
 
-Instalar la version LTS de [Node.js](https://nodejs.org) v16+ 
+* Instalar la version LTS de [Node.js](https://nodejs.org) v16+ 
+* Claves de Integración. [Guia para obtenerlo](https://github.com/izipay-pe/obtener-credenciales-de-conexion#obtener-credenciales-de-conexi%C3%B3n)
 
-clonar el repositorio.
+## 1.- Descargar proyecto
+Descargar el proyecto .zip haciendo click [aquí](https://github.com/JersonGerman/form-payment-izipay-node-express/archive/refs/heads/main.zip), o clonarlo con git
 
 ```sh
 git clone https://github.com/JersonGerman/form-payment-izipay-node-express.git
 ```
 
+## 2.- Instalar dependencias
 Instalar las dependecias del proyecto.
 
 ```sh
 npm install
 ```
 
+## 3.- Configurar Claves
+Editar el archivo de configuración `.env.example`
+```sh
+ID_STORE=*********** Identifier of the store of your merchant
+TEST_PASSWORD=************** Test password of your store
+PROD_PASSWORD=************** PROD password of your store
+TEST_KEY_HMAC_SHA_256=****************** HMAC TEST key of your trade
+PROD_KEY_H,AC_SHA_256=****************** HMAC PROD key of your trade
+```
+## 4.- Iniciar Servidor
 Iniciar  el servidor de desarrollo. 
 
 ```sh
