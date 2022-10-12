@@ -21,8 +21,12 @@
     <script src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js"></script>
   </head>
   <body>
-    <div id="paymentForm" style="width: 400px; margin: auto"></div>
+    <button id="btnShow" style="display: block; margin:20px auto;">Ingresar datos de tarjeta</button>
+    <div id="paymentForm" style="display:none;width: 266px; margin: auto;"></div>
     <script>
+
+      document.getElementById("btnShow").addEventListener("click", ()=> {document.getElementById("paymentForm").style.display = "block"});
+
       const header = {
         method: "POST",
         headers: {

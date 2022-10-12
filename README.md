@@ -1,8 +1,36 @@
 # form-payment-izipay-node-express
-This is a project to implement Izipay integrated payment form using nodejs with express as web server
+Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis para crear un pago en los formularios de Izipay.
 
-Nodejs 16.14.2
-npm 8.5.0
+
+
+### CreatePayment
+**POST** Crear FormToken  
+`http://localhost:4000/api/createPayment`
+**BODY** json
+```sh
+{
+    amount: 5,
+    currency: USD,
+    customer: {
+        email: "example@gmail.com"
+    },
+    orderId: pedido-123
+}
+```
+
+### ValidatePayment
+**POST** Verificar pago realizado
+`http://localhost:4000/api/validatePayment`
+**BODY** json
+```sh
+{
+    clientAnswer:{SHOPID:12345678,ORDERSTATUS:PAID,...}
+    hash: "saw1c3x1c31c1sfdfae78ada8s7dasd6as6d7d7as6",
+    hashKey: "sha256_hmac",
+    hashAlgorith: "sha256_hmac"
+    ...
+}
+```
 
 ## Instalación
 

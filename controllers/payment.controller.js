@@ -19,7 +19,7 @@ const createPayment = (req, res) => {
       }
     )
     .then((rpta) => {
-      {
+      { 
         res.status(200).json({ formToken: rpta.data.answer.formToken });
       }
     })
@@ -49,3 +49,4 @@ const validatePayment = (req, res) => {
 };
 
 module.exports = { createPayment, validatePayment };
+ 
