@@ -2,9 +2,9 @@
 Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis para crear un pago en los formularios de Izipay.
 
 ### CreatePayment
-**POST** Crear FormToken  
-`http://localhost:4000/api/createPayment`
-**BODY** json
+**POST:** Crear FormToken  
+`http://localhost:4000/api/createPayment`  
+**BODY:** json
 ```sh
 {
     amount: 5,
@@ -17,9 +17,9 @@ Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis par
 ```
 
 ### ValidatePayment
-**POST** Verificar pago realizado
-`http://localhost:4000/api/validatePayment`
-**BODY** json  
+**POST:** Verificar pago realizado
+`http://localhost:4000/api/validatePayment`  
+**BODY:** json  
 ```sh
 {
     clientAnswer:{SHOPID:12345678,ORDERSTATUS:PAID,...}
@@ -31,7 +31,6 @@ Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis par
 ```
 
 ## Requisitos previos
-
 * Instalar la version LTS de [Node.js](https://nodejs.org) v16+ 
 * Claves de Integración. [Guia para obtenerlo](https://github.com/izipay-pe/obtener-credenciales-de-conexion#obtener-credenciales-de-conexi%C3%B3n)
 
