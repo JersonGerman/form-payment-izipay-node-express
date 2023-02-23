@@ -49,7 +49,7 @@ npm install
 ```
 
 ## 3.- Configurar Claves
-Editar el archivo de configuración `.env.example`
+Editar el archivo de configuración `example.config.env` a `config.env`
 ```sh
 ID_STORE=*********** Identifier of the store of your merchant
 TEST_PASSWORD=************** Test password of your store
