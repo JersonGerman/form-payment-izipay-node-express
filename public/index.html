@@ -9,7 +9,7 @@
     <!-- CHANGE your public key -->
     <script
       src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js"
-      kr-public-key="44842422:testpublickey_Az8ibtrm5cAhb3aOt1g20oQtgpR14c9TSdPYSVhqFlj2P"
+      kr-public-key="54842422:testpublickey_Az8ibtrm5cAhb3aOt1g20oQtgpR14c9TSdPYSVhqFlj2P"
     ></script>
 
     <!-- theme and plugins. should be loaded after the javascript library -->
@@ -20,12 +20,65 @@
     />
     <script src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js"></script>
   </head>
+  <style>
+    #customButton{
+      height: 45px;
+      width: 100%;
+      background-color: #ff2216;
+      border: none;
+      color: white;
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+  </style>
   <body>
     <button id="btnShow" style="display: block; margin:20px auto;">Ingresar datos de tarjeta</button>
-    <div id="paymentForm" style="display:none;width: 266px; margin: auto;"></div>
+
+    <div id="paymentForm" style="display:none;width: 266px; margin: auto;">
+      <div class="kr-embedded" kr-popin>
+        <!-- custom text field -->
+      <input type="text"
+      name="acme-email"
+      placeholder="email"
+      class="kr-theme"
+      kr-icon="fas fa-email"
+      required/>
+
+        <!-- payment form fields -->
+        <div class="kr-pan"></div>
+        <div class="kr-expiry"></div>
+        <div class="kr-security-code"></div>
+
+      <!-- custom checkbox field -->
+      <input type='checkbox'
+      name='acme-terms'
+      label="add me to your mailing list" 
+      class="kr-theme"
+      required/>
+
+      <!-- custom hidden field -->
+      <input type='hidden'
+      name='acme-hidden'
+      value='my hidden value'/>
+
+        <!-- <div  style="display: none;"> -->
+          <!-- payment form submit button -->
+          <button id="buttonPayment" class="kr-payment-button"></button>
+        <!-- </div> -->
+        <!-- error zone -->
+        <div class="kr-form-error"></div>
+      </div>
+
+      <!-- Boton Personalizado -->
+      <button id="customButton">
+        Button Personalizado 0_0
+      </button>
+    </div>
     <script>
 
       document.getElementById("btnShow").addEventListener("click", ()=> {document.getElementById("paymentForm").style.display = "block"});
+      // Acción de click en el botón del Formulario
+      document.getElementById("customButton").addEventListener("click",()=> { document.getElementById("buttonPayment").click()} )
 
       const header = {
         method: "POST",
@@ -49,12 +102,13 @@
               formToken: res.formToken,
             })
               .then(({ KR }) => KR.onSubmit(validatePayment))
-              .then(({ KR }) => KR.addForm("#paymentForm"))
+              .then(({ KR }) => KR.attachForm("#paymentForm"))
               .then(({ KR, result }) => KR.showForm(result.formId));
           });
       };
 
       const validatePayment = (event) => {
+        console.log("pago:", event)
         fetch("http://localhost:4000/api/validatePayment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
