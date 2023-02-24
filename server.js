@@ -2,7 +2,7 @@ const path = require('path');
 const chalk= require('chalk');
 const express =  require('express');
 const cors = require('cors');
-const PORT = 3000;
+const PORT = 4000;
 
 const {paymentRouter} = require('./routes/payment.routes');
 

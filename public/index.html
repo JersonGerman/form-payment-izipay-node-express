@@ -35,36 +35,20 @@
     <button id="btnShow" style="display: block; margin:20px auto;">Ingresar datos de tarjeta</button>
 
     <div id="paymentForm" style="display:none;width: 266px; margin: auto;">
-      <div class="kr-embedded" kr-popin>
-        <!-- custom text field -->
-      <input type="text"
-      name="acme-email"
-      placeholder="email"
-      class="kr-theme"
-      kr-icon="fas fa-email"
-      required/>
+      <div class="kr-embedded" >
+
 
         <!-- payment form fields -->
         <div class="kr-pan"></div>
         <div class="kr-expiry"></div>
         <div class="kr-security-code"></div>
 
-      <!-- custom checkbox field -->
-      <input type='checkbox'
-      name='acme-terms'
-      label="add me to your mailing list" 
-      class="kr-theme"
-      required/>
 
-      <!-- custom hidden field -->
-      <input type='hidden'
-      name='acme-hidden'
-      value='my hidden value'/>
 
-        <!-- <div  style="display: none;"> -->
+        <div  style="display: none;">
           <!-- payment form submit button -->
           <button id="buttonPayment" class="kr-payment-button"></button>
-        <!-- </div> -->
+        </div>
         <!-- error zone -->
         <div class="kr-form-error"></div>
       </div>
@@ -102,7 +86,7 @@
               formToken: res.formToken,
             })
               .then(({ KR }) => KR.onSubmit(validatePayment))
-              .then(({ KR }) => KR.attachForm("#paymentForm"))
+              .then(({ KR }) => KR.addForm("#paymentForm"))
               .then(({ KR, result }) => KR.showForm(result.formId));
           });
       };
