@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+
+  <!-- CHANGE your public key -->
+  <script src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js"
+    kr-public-key="54842422:testpublickey_Az8ibtrm5cAhb3aOt1g20oQtgpR14c9TSdPYSVhqFlj2P"></script>
+
+  <!-- theme and plugins. should be loaded after the javascript library -->
+  <!-- not mandatory but helps to have a nice payment form out of the box -->
+  <link rel="stylesheet" href="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic-reset.css" />
+  <script src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/script.js"></script>
+</head>
+<style>
+  #customButton {
+    height: 45px;
+    width: 100%;
+    background-color: #ff2216;
+    border: none;
+    color: white;
+    font-size: 1.05rem;
+    cursor: pointer;
+  }
+</style>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+      <!-- Navbar content -->
+      <div class="container">
+        <a class="navbar-brand" href="./">Izipay</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <ul class="nav nav-tabs navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link " aria-current="page" href="./">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="incrustado.html">Incrustado</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " aria-current="page" href="redireccion.html">Redirección</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main style="text-align: center;">
+
+    <Button onclick="startForm()">Abrir Formulario</Button>
+
+    <div id="paymentForm" style="width: 266px; margin: 1rem auto;"></div>
+
+  </main>
+
+  <script>
+
+    const header = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: 90,
+        currency: "USD",
+        customer: {
+          email: "example9@gmail.com",
+        },
+        orderId: "pedido-9",
+      }),
+    };
+    const startForm = () => {
+      fetch("http://localhost:3000/api/createPayment", header)
+        .then((res) => res.json())
+        .then((res) => {
+          KR.setFormConfig({
+            formToken: res.formToken,
+          })
+            .then(({ KR }) => KR.onSubmit(validatePayment))
+            .then(({ KR }) => KR.addForm("#paymentForm"))
+            .then(({ KR, result }) => KR.showForm(result.formId));
+        });
+    };
+
+    const validatePayment = (event) => {
+      console.log("pago:", event)
+      fetch("http://localhost:3000/api/validatePayment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(event),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res == "Valid Payment") {
+            document.getElementById("paymentForm").innerHTML =
+              "<h1>Successful Payment</h2>";
+          }
+        });
+    };
+
+    KR.onFormValid(({ KR, cardInfo }) => {
+      console.log(
+        "Selected brand: " + cardInfo.brand + ", and bin: " + cardInfo.bin
+      );
+    });
+    KR.onError((event) => {
+      let code = event.errorCode;
+      let message = event.errorMessage;
+      console.log(code + ": " + message);
+    });
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

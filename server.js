@@ -12,9 +12,18 @@ app.use(express.json());
 
 app.use("/api",paymentRouter)
 
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname+"/public/index.html"));
-})
+app.use(express.static(path.join(__dirname, 'public')))
+
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname,"public"));
+// })
+// app.get("/redireccion", (req, res) => {
+//     res.sendFile(path.join(__dirname+"/public/redireccion.html"))
+// })
+// app.get("/incrustado", (req, res) => {
+//     res.sendFile(path.join(__dirname+"/public/incrustado.html"))
+// })
+
 
 app.listen(PORT,()=>{
     console.log('Server running');

@@ -3,22 +3,24 @@ Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis par
 
 ### CreatePayment
 **POST:** Crear FormToken  
-`http://localhost:4000/api/createPayment`  
+`http://localhost:3000/api/createPayment`  
 **BODY:** json
 ```sh
 {
     amount: 5,
     currency: USD,
     customer: {
-        email: "example@gmail.com"
+        email: "example@gmail.com",
+        ...
     },
-    orderId: pedido-123
+    orderId: pedido-123,
+    ...
 }
 ```
 
 ### ValidatePayment
 **POST:** Verificar pago realizado
-`http://localhost:4000/api/validatePayment`  
+`http://localhost:3000/api/validatePayment`  
 **BODY:** json  
 ```sh
 {
@@ -67,7 +69,7 @@ npm start
 Abrir en su navegador la siguiente URL
 
 ```sh
-http://localhost:4000
+http://localhost:3000
 ```
 
 Para más información acerca del formulario de Izipay consulte su documentación [Aquí](https://secure.micuentaweb.pe/doc/es-PE/rest/V4.0/javascript/)
