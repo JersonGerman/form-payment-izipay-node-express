@@ -2,9 +2,11 @@ const axios = require("axios").default;
 const { HmacSHA256 } = require("crypto-js");
 const Hex = require("crypto-js/enc-hex");
 const dotenv = require("dotenv");
+const { v4: uuid } = require("uuid");
 const { genRandonString, getDateUTC, getSignature } = require("../helpers/helpers");
 
-dotenv.config({ path: "./config.env" });
+// Variable de entorno
+dotenv.config({ path: "./.env" });
 
 let PASSWORD = "";
 let KEY = "";
@@ -19,7 +21,21 @@ else {
 }
 
 const createPayment = (req, res) => {
-  const body = req.body;
+  const {name, lastName, amount, email} = req.body;
+
+  const body = {
+    amount: amount * 100,
+    currency: "USD",
+    customer: {
+      email,
+      billingDetails: {
+        firstName: name,
+        lastName,
+      }
+    },
+    orderId: `order-${ uuid() }`
+  }
+  
   const auth = btoa(`${process.env.ID_TIENDA}:${PASSWORD}`);
   axios
     .post(
@@ -33,6 +49,7 @@ const createPayment = (req, res) => {
     )
     .then((rpta) => {
       { 
+        // console.log(rpta);
         res.status(200).json({ formToken: rpta.data.answer.formToken });
       }
     })

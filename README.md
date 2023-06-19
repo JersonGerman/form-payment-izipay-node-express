@@ -1,9 +1,32 @@
 # form-payment-izipay-node-express
 Este proyecto es un ejemplo de un servidor en Nodejs que nos brinda dos Apis para crear un pago en los formularios de Izipay.
 
+
+# Requisitos
+* Nodejs
+* Acceso al Back Office Vendedor de Izipay
+
+# Instalación
+1. Descargar el proyecto
+2. Cambiar el nombre del archivo de variable de entorno: `.env.example` por `.env`
+3. Configurar el archivo `.env` por su claves de su Back Office Vendedor: **Configuración/tiendas/Claves y Claves de API REST**
+4. Instalar dependencias `npm install`
+5. Ejecutar servidor local `npm start`
+
+
+# Guia
+Este proyecto contiene dos servicios APIREST creados
+
+1. http://localhost:3000/api/createPayment      => Endpoint para generar el `formToken` necesario y motrar el formulario de pago.
+2. http://localhost:3000/api/validatePayment    => Endpoint que realizará la valicación de un pago exitoso.
+
 ### CreatePayment
 **POST:** Crear FormToken  
 `http://localhost:3000/api/createPayment`  
+**HEADERS**
+``
+
+``
 **BODY:** json
 ```sh
 {
